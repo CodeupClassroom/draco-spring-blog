@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee</title>
+</head>
+<body>
+  <h1>Welcome to the coffee page!</h1>
+  <div th:if="${selections}">
+    <h2>You selected <span th:text="${roast}"></span> roast!</h2>
+    <p>Here are some options for you:</p>
+    <ul>
+        <li th:each="selection : ${selections}"><p><span th:text="${selection.brand}"></span> <span th:text="${selection.origin}"></span> <span th:text="${selection.roast}"></span> roast</p></li>
+    </ul>
+  </div>
+  <h2>Select your favored roast:</h2>
+  <ul>
+      <li><a href="/coffee/dark">Dark Roast</a></li>
+      <li><a href="/coffee/medium">Medium Roast</a></li>
+      <li><a href="/coffee/light">Light Roast</a></li>
+  </ul>
+</body>
+</html>
