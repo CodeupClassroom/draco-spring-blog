@@ -286,8 +286,8 @@ Modify coffee.html:
     <h2 th:if="${selections}">
         <p>You selected <span th:text="${roast}"></span> roast!</p>
         <p>Here are some options for you:</p>
-        <ul th:each="selection : ${selections}">
-            <p><span th:text="${selection.brand}"></span> <span th:text="${selection.origin}"></span> <span th:text="${selection.roast}"></span> roast</p>
+        <ul>
+            <li th:each="selection : ${selections}"><p><span th:text="${selection.brand}"></span> <span th:text="${selection.origin}"></span> <span th:text="${selection.roast}"></span> roast</p></li>
         </ul>
     </h2>
 ```
