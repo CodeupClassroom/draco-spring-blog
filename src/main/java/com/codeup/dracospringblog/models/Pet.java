@@ -34,6 +34,11 @@ public class Pet {
     public Pet() {
     }
 
+    public Pet(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public long getId() {
         return id;
     }
@@ -80,5 +85,17 @@ public class Pet {
 
     public void setPetStats(PetStats petStats) {
         this.petStats = petStats;
+    }
+
+    @Override
+    public String toString() {
+        return "=============== Pet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", owner=" + owner +
+                ", vets=" + vets +
+                ", petStats=" + petStats +
+                '}';
     }
 }

@@ -18,6 +18,10 @@ public class PetStats {
     public PetStats() {
     }
 
+    public PetStats(double weightInPounds) {
+        this.weightInPounds = weightInPounds;
+    }
+
     public long getId() {
         return id;
     }

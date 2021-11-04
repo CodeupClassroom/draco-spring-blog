@@ -2,6 +2,7 @@ package com.codeup.dracospringblog.models;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,12 +15,23 @@ public class Owner {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     public Owner() {
     }
 
+    public Owner(String name) {
+        this.name = name;
+    }
 
+    public Owner(String name, List<Pet> pets) {
+        this.name = name;
+        this.pets = pets;
+    }
+
+    public void addPet(Pet p) {
+        this.pets.add(p);
+    }
 
     public long getId() {
         return id;
