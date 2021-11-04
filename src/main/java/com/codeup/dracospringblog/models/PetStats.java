@@ -1,9 +1,6 @@
 package com.codeup.dracospringblog.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -15,6 +12,33 @@ public class PetStats {
 
     private double weightInPounds;
 
+    @OneToOne(mappedBy = "petStats")
+    private Pet pet;
 
+    public PetStats() {
+    }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public double getWeightInPounds() {
+        return weightInPounds;
+    }
+
+    public void setWeightInPounds(double weightInPounds) {
+        this.weightInPounds = weightInPounds;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
 }
