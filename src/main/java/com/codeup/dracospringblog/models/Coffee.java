@@ -36,4 +36,6 @@ public class Coffee {
     public void setOrigin(String origin) {
         this.origin = origin;
     }
+
+
 }
