@@ -3,13 +3,12 @@ package com.codeup.dracospringblog.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ads")
+@Table(name="ads")
 public class Ad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
 
     @Column(nullable = true, length = 300)
     private String title;
