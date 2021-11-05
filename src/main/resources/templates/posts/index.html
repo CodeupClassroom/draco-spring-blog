@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+</head>
+<body>
+
+    <h1>Posts</h1>
+
+    <div th:each="post : ${posts}">
+        <h3 th:text="${post.title}"></h3>
+        <p th:text="${post.body}"></p>
+        <a th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit Post</a>
+        <form th:action="@{'/posts/' + ${post.id} + '/delete'}" th:method="POST">
+            <button>Delete Post</button>
+        </form>
+    </div>
+
+
+</body>
+</html>
