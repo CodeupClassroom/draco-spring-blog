@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ad Creation</title>
+</head>
+<body>
+<h1>Create Ad</h1>
+<form id="ad-create-form" th:action="@{/ads}" th:method="POST">
+    <input type="text" name="title" placeholder="Title">
+    <input type="text" name="description" placeholder="Description">
+    <div id="images"></div>
+    <button id="add-images">Add Image</button>
+    <button>Submit</button>
+</form>
+<script>
+    "use strict";
+    const images = document.querySelector("#images");
+    const addImageButton = document.querySelector("#add-images");
+    addImageButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        const formElement = document.createElement('input');
+        formElement.type = "url";
+        formElement.name = "urls"
+        images.appendChild(formElement);
+    });
+</script>
+</body>
+</html>
