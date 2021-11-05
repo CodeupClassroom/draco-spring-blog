@@ -1,6 +1,7 @@
 package com.codeup.dracospringblog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -16,7 +17,22 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    private List<PostImage> images;
+
+
     public Post() {
+    }
+
+    public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
+    public Post(String title, String body, List<PostImage> images) {
+        this.title = title;
+        this.body = body;
+        this.images = images;
     }
 
     public long getId() {
@@ -41,5 +57,13 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public List<PostImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PostImage> images) {
+        this.images = images;
     }
 }
