@@ -11,6 +11,7 @@
     <div th:each="post : ${posts}">
         <img width="50" th:src="${image.url}" alt="" th:each="image : ${post.images}">
         <h3 th:text="${post.title}"></h3>
+        <span>By <span th:text="${post.user.email}"></span></span>
         <p th:text="${post.body}"></p>
         <a th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit Post</a>
         <form th:action="@{'/posts/' + ${post.id} + '/delete'}" th:method="POST">
