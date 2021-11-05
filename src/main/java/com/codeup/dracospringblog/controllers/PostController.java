@@ -1,11 +1,13 @@
 package com.codeup.dracospringblog.controllers;
 
 import com.codeup.dracospringblog.models.Post;
+import com.codeup.dracospringblog.models.PostImage;
 import com.codeup.dracospringblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,15 +38,32 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
     public String create() {
-        return "Here is the post create form...";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String insert() {
-        return "New post saved...";
+    public String insert(@RequestParam String title, @RequestParam String body, @RequestParam List<String> urls) {
+        List<PostImage> images = new ArrayList<>();
+
+        Post post = new Post(title, body);
+
+        // create list of post image objects to pass to the new post constructor
+        for (String url : urls) {
+            PostImage postImage = new PostImage(url);
+            postImage.setPost(post);
+            images.add(postImage);
+        }
+
+        post.setImages(images);
+
+        // save a post object with images
+
+
+        postsDao.save(post);
+
+        // modify the post index view to display post images
+        return "redirect:/posts";
     }
 
     // ================ EDIT
