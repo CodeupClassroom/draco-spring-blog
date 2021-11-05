@@ -1,11 +1,10 @@
 package com.codeup.dracospringblog.models;
 
 import javax.persistence.*;
-import java.util.List;
-
 
 @Entity
-public class Vet {
+@Table(name="pet_toys")
+public class PetToy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,11 +12,12 @@ public class Vet {
 
     private String name;
 
-    // Vet Class
-    @ManyToMany(mappedBy = "vets")
-    private List<Pet> pets;
 
-    public Vet() {
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
+
+    public PetToy() {
     }
 
     public long getId() {
@@ -36,11 +36,11 @@ public class Vet {
         this.name = name;
     }
 
-    public List<Pet> getPets() {
-        return pets;
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 }

@@ -19,6 +19,7 @@ public class Pet {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    // Pet Class
     @ManyToMany
     @JoinTable(
             name="pet_vet",
@@ -30,6 +31,10 @@ public class Pet {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_stat_id", referencedColumnName = "id")
     private PetStats petStats;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private List<PetToy> toys;
+
 
     public Pet() {
     }
@@ -85,6 +90,14 @@ public class Pet {
 
     public void setPetStats(PetStats petStats) {
         this.petStats = petStats;
+    }
+
+    public List<PetToy> getToys() {
+        return toys;
+    }
+
+    public void setToys(List<PetToy> toys) {
+        this.toys = toys;
     }
 
     @Override
