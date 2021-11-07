@@ -2,7 +2,9 @@ package com.codeup.dracospringblog.controllers;
 
 import com.codeup.dracospringblog.models.Post;
 import com.codeup.dracospringblog.models.PostImage;
+import com.codeup.dracospringblog.models.User;
 import com.codeup.dracospringblog.repositories.PostRepository;
+import com.codeup.dracospringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +18,11 @@ public class PostController {
     // injecting a dependency...
 
     private PostRepository postsDao;
+    private UserRepository usersDao;
 
-    public PostController(PostRepository postsDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao) {
         this.postsDao = postsDao;
+        this.usersDao = usersDao;
     }
 
     @GetMapping("/posts")
@@ -45,7 +49,7 @@ public class PostController {
     @PostMapping("/posts/create")
     public String insert(@RequestParam String title, @RequestParam String body, @RequestParam List<String> urls) {
         List<PostImage> images = new ArrayList<>();
-
+        User author = usersDao.getById(1L);
         Post post = new Post(title, body);
 
         // create list of post image objects to pass to the new post constructor
@@ -57,8 +61,9 @@ public class PostController {
 
         post.setImages(images);
 
-        // save a post object with images
+        post.setUser(author);
 
+        // save a post object with images
 
         postsDao.save(post);
 
