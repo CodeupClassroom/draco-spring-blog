@@ -42,6 +42,12 @@ public class Coffee {
         this.brand = brand;
     }
 
+    public Coffee(String brand, String origin, String roast){
+        this.brand = brand;
+        this.origin = origin;
+        this.roast = roast;
+    }
+
     public String getRoast() {
         return roast;
     }

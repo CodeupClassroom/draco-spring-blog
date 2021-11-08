@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a coffee to the database</title>
+</head>
+<body>
+<h1>Create-a-coffee</h1>
+<form th:action="@{/coffee/create}" th:method="post" th:object="${coffee}">
+    <label for="brand">Brand:</label>
+    <input type="text" th:field="*{brand}" id="brand"><br>
+    <label for="origin">Origin:</label>
+    <input type="text" th:field="*{origin}" id="origin"><br>
+    <label for="roast">Roast:</label>
+    <input type="text" th:field="*{roast}" id="roast"><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
