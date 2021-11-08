@@ -86,15 +86,19 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    public String updatePost(@PathVariable long id, @RequestParam(name="title") String title, @RequestParam String body) {
+    public String updatePost(@ModelAttribute Post post) {
         // use the new form inputs to update the existing post in the DB
         // pull the existing post object from the database
-        Post post = postsDao.getById(id);
-        // set the title and body to the request param values
-        post.setTitle(title);
-        post.setBody(body);
-        // persist the change in the db with the postsDao
-        postsDao.save(post); // works to both update existing posts and insert new posts
+        Post editedPost = postsDao.getById(post.getId());
+//         set the title and body to the request param values
+        editedPost.setTitle(post.getTitle());
+        editedPost.setBody(post.getBody());
+
+//        User user = usersDao.getById(1L);
+//        post.setUser(user);
+//        // persist the change in the db with the postsDao
+//        postsDao.save(post); // works to both update existing posts and insert new posts
+        postsDao.save(editedPost);
         return "redirect:/posts";
     }
 
