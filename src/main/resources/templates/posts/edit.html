@@ -8,16 +8,16 @@
 
     <h1>Edit Post</h1>
 
-    <form th:method="POST">
+    <form th:action="@{/posts/{id}/edit(id=${id})}" th:method="POST" th:object="${post}">
         <div>
             <label for="title">Title</label>
             <br>
-            <input id="title" name="title" type="text" placeholder="Enter Blog Post Title" th:value="${post.title}">
+            <input th:field="*{title}" type="text" placeholder="Enter Blog Post Title" th:value="${post.title}">
         </div>
         <div>
             <label for="body">Body</label>
             <br>
-            <textarea name="body" id="body" cols="30" rows="10" placeholder="Enter Blog Content" th:text="${post.body}"></textarea>
+            <textarea th:field="*{body}" cols="30" rows="10" placeholder="Enter Blog Content" th:text="${post.body}"></textarea>
         </div>
         <button>Edit Post</button>
     </form>
