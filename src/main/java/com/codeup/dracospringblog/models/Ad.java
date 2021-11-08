@@ -16,6 +16,10 @@ public class Ad {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     public Ad() {
     }
 
@@ -47,5 +51,13 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
