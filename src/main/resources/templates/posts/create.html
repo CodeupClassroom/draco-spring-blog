@@ -8,16 +8,16 @@
 
     <h1>Create Post</h1>
 
-    <form th:method="POST">
+    <form th:action="@{/posts/create}" th:method="POST" th:object="${post}">
         <div>
             <label for="title">Title</label>
             <br>
-            <input id="title" name="title" type="text" placeholder="Enter Blog Post Title">
+            <input id="title" th:field="*{title}" type="text" placeholder="Enter Blog Post Title">
         </div>
         <div>
             <label for="body">Body</label>
             <br>
-            <textarea name="body" id="body" cols="30" rows="10" placeholder="Enter Blog Content"></textarea>
+            <textarea th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter Blog Content"></textarea>
         </div>
         <div>
             <label for="image-1">Image 1</label>

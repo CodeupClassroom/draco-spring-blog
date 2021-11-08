@@ -42,15 +42,16 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String insert(@RequestParam String title, @RequestParam String body, @RequestParam List<String> urls) {
+    public String insert(@ModelAttribute Post post, @RequestParam List<String> urls) {
         List<PostImage> images = new ArrayList<>();
         User author = usersDao.getById(1L);
-        Post post = new Post(title, body);
+//        Post post = new Post(title, body);
 
         // create list of post image objects to pass to the new post constructor
         for (String url : urls) {
