@@ -5,6 +5,7 @@ import com.codeup.dracospringblog.models.PostImage;
 import com.codeup.dracospringblog.models.User;
 import com.codeup.dracospringblog.repositories.PostRepository;
 import com.codeup.dracospringblog.repositories.UserRepository;
+import com.codeup.dracospringblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,12 @@ public class PostController {
 
     private PostRepository postsDao;
     private UserRepository usersDao;
+    private EmailService emailService;
 
-    public PostController(PostRepository postsDao, UserRepository usersDao) {
+    public PostController(PostRepository postsDao, UserRepository usersDao, EmailService emailService) {
         this.postsDao = postsDao;
         this.usersDao = usersDao;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -68,6 +71,7 @@ public class PostController {
 
         postsDao.save(post);
 
+        emailService.prepareAndSend(post, "You submitted: " + post.getTitle(), post.getBody());
         // modify the post index view to display post images
         return "redirect:/posts";
     }
