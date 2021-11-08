@@ -1,8 +1,29 @@
 package com.codeup.dracospringblog.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "coffees")
 public class Coffee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Column(nullable = false, length = 6)
     private String roast;
+
+    @Column(nullable = false, length = 50)
     private String origin;
+
+    @Column(nullable = false, length = 50)
     private String brand;
 
     public String getBrand() {
