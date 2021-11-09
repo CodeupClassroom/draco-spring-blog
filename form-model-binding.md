@@ -215,3 +215,156 @@ CoffeeController.java
     }
 ```
 Just get rid of the param list and add a ModelAttribute parameter. Now that you know form model binding you don't have to write endless parameter lists for every Post controller. :)
+
+## Exercises
+
+### 1. Create a posts/create.html view inside the templates folder. This HTML page should contain a form for creating a new post
+
+```
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a Post</title>
+</head>
+<body>
+    <h2>Create a Post:</h2>
+    <form action="/posts/create" method="post">
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title">
+        <label for="body">Body:</label>
+        <textarea name="body" id="body" cols="30" rows="10"></textarea>
+        <button type="submit">Submit Post</button>
+    </form>
+</body>
+</html>
+```
+
+### 2. Change your controller method for showing the post creation form to actually show the form created in the step above.
+
+```
+@GetMapping("/posts/create")
+    public String showCreatePostsForm(){
+        return "posts/create";
+    }
+```
+
+### This method should pass a new (i.e. empty) Post object to the view
+
+```
+ @GetMapping("/posts/create")
+    public String showCreatePostsForm(Model model){
+        model.addAttribute("post", new Post());
+        return "posts/create";
+    }
+```
+
+### 3. Use what you have learned in this lesson to have the post creation form submit a post object and store that post using the posts repository. After the post is created you should redirect the user to the posts index page (i.e. /posts). You can redirect by returning a string from a controller method that starts with "redirect:"
+
+```
+  @PostMapping("/posts/create")
+    public String showCreatePostsProcess(@RequestParam String title, @RequestParam String body){
+        User user = new User(1, "jojo", "email@email.info", "codeup");
+        Post post = new Post(title, body, user);
+        postRepository.save(post);
+        return "redirect:/posts";
+    }
+```
+
+Now we'll actually do form-model binding
+
+```
+    <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+        <label for="title">Title:</label>
+        <input type="text" th:field="*{title}" id="title">
+        <label for="body">Body:</label>
+        <textarea th:field="*{body}" id="body" cols="30" rows="10"></textarea>
+        <button type="submit">Submit Post</button>
+    </form>
+```
+
+And refactor the posts controller
+
+```
+   @PostMapping("/posts/create")
+    public String showCreatePostsProcess(@ModelAttribute Post post){
+        User user = new User(1, "jojo", "email@email.info", "codeup");
+        post.setUser(user);
+        postRepository.save(post);
+        return "redirect:/posts";
+    }
+```
+
+### 4. Create a controller method and HTML template for viewing a form to edit a specific post. This method should map to /posts/{id}/edit. When you view this page, the form should be pre-populated with the values from an existing post
+
+```
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+</head>
+<body>
+<form th:action="@{/posts/edit/{id}(id=${id})}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" th:value="${post.title}">
+    <label for="body">Body:</label>
+    <textarea id="body" name="body" th:text="${post.body}" ></textarea>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
+```
+PostController.java:
+```
+    @GetMapping("/posts/edit/{id}")
+    public String editForm(@PathVariable long id, Model model){
+        model.addAttribute("post", postRepository.getById(id));
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, @RequestParam String title, @RequestParam String body){
+        Post post = postRepository.getById(id);
+        post.setTitle(title);
+        post.setBody(body);
+        postRepository.save(post);
+        return "redirect:/posts/" + id;
+    }
+}
+```
+
+I suppose we're supposed to use form-model binding on this, too.
+
+
+edit.html:
+```
+<form th:action="@{/posts/edit/{id}(id=${id})}" th:method="post" th:object="${post}">
+    <label for="title">Title:</label>
+    <input type="text" th:field="*{title}" id="title" th:value="${post.title}">
+    <label for="body">Body:</label>
+    <textarea id="body" th:field="*{body}" th:text="${post.body}" ></textarea>
+    <button type="submit">Submit</button>
+</form>
+```
+Notice, I don't have to add the new empty Post object to the GetMapping method, because a post object is already being passed in the model.
+
+PostController.java:
+```
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, @ModelAttribute Post post){
+        User user = new User(1, "jojo", "email@email.info", "codeup");
+        post.setUser(user);
+        postRepository.save(post);
+        return "redirect:/posts/" + id;
+    }
+```
+
+Bonus
+PostController.java:
+```
+    @PostMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable long id, @ModelAttribute Post post){
+        return createPosts(post);
+    }
+```
