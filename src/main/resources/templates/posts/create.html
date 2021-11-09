@@ -1,33 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create Post</title>
-</head>
+<head th:insert="partials/partials.html :: head('Post Create')"></head>
 <body>
-
-    <h1>Create Post</h1>
-
-    <form th:action="@{/posts/create}" th:method="POST" th:object="${post}">
-        <div>
-            <label for="title">Title</label>
-            <br>
-            <input th:field="*{title}" type="text" placeholder="Enter Blog Post Title">
-        </div>
-        <div>
-            <label for="body">Body</label>
-            <br>
-            <textarea th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter Blog Content"></textarea>
-        </div>
-        <div>
-            <label for="image-1">Image 1</label>
-            <input id="image-1" name="urls" type="url" placeholder="Enter image url">
-            <br>
-            <label for="image-2">Image 2</label>
-            <input id="image-2" name="urls" type="url" placeholder="Enter image url">
-        </div>
-        <button>Create Post</button>
-    </form>
-
+    <nav th:insert="partials/partials.html :: navbar"></nav>
+    <header th:insert="partials/partials.html :: header('Create Post')"></header>
+    <main class="container">
+        <form th:insert="partials/partials.html :: post-form(@{/posts/create}, 'Create Post')"></form>
+    </main>
+    <th:block th:insert="partials/partials.html :: bootstrap-js" />
 </body>
 </html>

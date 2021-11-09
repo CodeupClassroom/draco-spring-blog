@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="partials/partials.html :: head('Welcome!')"></head>
+<body id="landing-page">
+    <nav th:insert="partials/partials.html :: navbar"></nav>
+    <header th:insert="partials/partials.html :: header('Welcome!')"></header>
+    <th:block th:insert="partials/partials.html :: bootstrap-js" />
+</body>
+</html>
