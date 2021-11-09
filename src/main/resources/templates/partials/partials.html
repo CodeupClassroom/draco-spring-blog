@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <!-- ================== HEAD -->
@@ -29,11 +29,13 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/login}">Login</a>
                 </li>
-                <li class="nav-item ml-auto">
-                    <a class="nav-link" href="#">Logout</a>
+                <li class="nav-item ml-auto" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button>Logout</button>
+                    </form>
                 </li>
             </ul>
         </div>
