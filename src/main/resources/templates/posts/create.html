@@ -5,7 +5,7 @@
     <nav th:insert="partials/partials.html :: navbar"></nav>
     <header th:insert="partials/partials.html :: header('Create Post')"></header>
     <main class="container">
-        <form th:insert="partials/partials.html :: post-form(@{/posts/create}, 'Create Post')"></form>
+        <th:block th:insert="partials/partials.html :: post-form(@{/posts/create}, 'Create Post')"></th:block>
     </main>
     <th:block th:insert="partials/partials.html :: bootstrap-js" />
 </body>

@@ -5,6 +5,7 @@ import com.codeup.dracospringblog.models.User;
 import com.codeup.dracospringblog.repositories.PostRepository;
 import com.codeup.dracospringblog.repositories.UserRepository;
 import com.codeup.dracospringblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String insert(@ModelAttribute Post post) {
-        User author = usersDao.getById(1L);
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User author = usersDao.getById(principal.getId());
         post.setUser(author);
         postsDao.save(post);
         emailService.prepareAndSend(post, "You submitted: " + post.getTitle(), post.getBody());
