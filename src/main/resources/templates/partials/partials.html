@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <!-- ================== HEAD -->
@@ -29,11 +29,13 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link" th:href="@{/login}">Login</a>
                 </li>
-                <li class="nav-item ml-auto">
-                    <a class="nav-link" href="#">Logout</a>
+                <li class="nav-item ml-auto" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button>Logout</button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -42,19 +44,21 @@
 
 
 <!-- ================== POST FORM -->
-<form th:fragment="post-form(action, btnText)" th:action="${action}" th:method="POST" th:object="${post}">
-    <div class="form-group mb-3">
-        <label class="form-label fw-bold" for="title">Title</label>
-        <input class="form-control" th:field="*{title}" type="text" placeholder="Enter Blog Post Title">
-    </div>
-    <div class="form-group mb-3">
-        <label class="form-label fw-bold" for="body">Body</label>
-        <textarea class="form-control" th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter Blog Content"></textarea>
-    </div>
-    <div class="d-grid gap-2 d-block">
-        <button class="btn btn-primary" type="button" th:text="${btnText}"></button>
-    </div>
-</form>
+<th:block th:fragment="post-form(action, btnText)">
+    <form th:action="${action}" th:method="POST" th:object="${post}">
+        <div class="form-group mb-3">
+            <label class="form-label fw-bold" for="title">Title</label>
+            <input class="form-control" th:field="*{title}" type="text" placeholder="Enter Blog Post Title">
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label fw-bold" for="body">Body</label>
+            <textarea class="form-control" th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter Blog Content"></textarea>
+        </div>
+        <div class="d-grid gap-2 d-block">
+            <button class="btn btn-primary" th:text="${btnText}"></button>
+        </div>
+    </form>
+</th:block>
 
 
 <!-- ================== HEADER -->
