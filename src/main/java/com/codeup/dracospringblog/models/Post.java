@@ -29,6 +29,9 @@ public class Post {
         this.body = body;
     }
 
+    public Post(String test_post, String s, User testUser) {
+    }
+
     public long getId() {
         return id;
     }

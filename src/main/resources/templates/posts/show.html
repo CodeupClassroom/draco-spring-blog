@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="partials/partials.html :: head('Post Details')"></head>
+<body>
+<nav th:insert="partials/partials.html :: navbar"></nav>
+<header th:insert="partials/partials.html :: header('Show Post')"></header>
+<main class="container">
+    <h3 th:text="${post.title}"></h3>
+    <span>By <a th:href="'mailto:' + ${post.user.email}" th:text="${post.user.email}"></a></span>
+    <p th:text="${post.body}"></p>
+    <div sec:authorize="isAuthenticated()">
+        <div th:if="${#authentication.principal.id == post.user.id}">
+            <a class="btn btn-sm btn-warning" th:href="@{'/posts/' + ${post.id} + '/edit'}">Edit Post</a>
+            <form class="d-inline" th:action="@{'/posts/' + ${post.id} + '/delete'}" th:method="POST">
+                <button class="btn btn-sm btn-danger">Delete Post</button>
+            </form>
+        </div>
+    </div>
+</main>
+<th:block th:insert="partials/partials.html :: bootstrap-js" />
+</body>
+</html>
