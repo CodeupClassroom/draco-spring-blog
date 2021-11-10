@@ -4,7 +4,6 @@ import com.codeup.dracospringblog.models.Post;
 import com.codeup.dracospringblog.models.User;
 import com.codeup.dracospringblog.repositories.PostRepository;
 import com.codeup.dracospringblog.repositories.UserRepository;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -86,7 +85,6 @@ public class PostIntegrationTests {
     }
 
     // test post index view
-
     @Test
     public void testPostIndex() throws Exception {
         Post firstPost = postDao.findAll().get(0);
@@ -95,10 +93,6 @@ public class PostIntegrationTests {
             .andExpect(content().string(containsString("Posts"))) // expect content of response to include header title
             .andExpect(content().string(containsString(firstPost.getTitle()))); // expect content to contain string of a post
     }
-
-    // test post show
-        // expect status is ok
-        // expect contents to contain the given post's title
 
     @Test
     public void testPostShow() throws Exception {
@@ -109,10 +103,6 @@ public class PostIntegrationTests {
                 .andExpect(content().string(containsString(firstPost.getTitle()))); // expect content to contain string of a post
     }
 
-    // test post create
-        // with csrf and set session
-        // expect redirection
-
     @Test
     public void testPostCreate() throws Exception {
         mvc.perform(post("/posts/create").with(csrf())
@@ -122,12 +112,24 @@ public class PostIntegrationTests {
                 .andExpect(status().is3xxRedirection());
     }
 
-    // test post edit
-        // setup similar to creating a post with csrf and session
-        // expect redirection
+    @Test
+    public void testEditPost() throws Exception {
+        List<Post> posts = postDao.findAll();
+        Post post = posts.get(posts.size() - 1);
+        mvc.perform(post("/posts/" + post.getId() + "/edit").with(csrf())
+                .session((MockHttpSession) httpSession)
+                .param("title", "Blah Blah")
+                .param("body", "Blah Blah"))
+                .andExpect(status().is3xxRedirection());
+    }
 
-    // test post delete
-        // setup similar to creating a post with csrf and session
-        // expect redirection
+    @Test
+    public void testDeletePost() throws Exception {
+        List<Post> posts = postDao.findAll();
+        Post post = posts.get(posts.size() - 1);
+        mvc.perform(post("/posts/" + post.getId() + "/delete").with(csrf())
+                .session((MockHttpSession) httpSession))
+                .andExpect(status().is3xxRedirection());
+    }
 
 }
