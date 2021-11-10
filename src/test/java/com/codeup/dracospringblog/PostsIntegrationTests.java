@@ -19,9 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import javax.servlet.http.HttpSession;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -60,11 +57,6 @@ public class PostsIntegrationTests {
             newUser.setEmail("testUser@codeup.com");
             testUser = userDao.save(newUser);
         }
-
-        Post postToSave = new Post("Test Post", "Test Body");
-        testUser.setPosts(new ArrayList<>(Arrays.asList(postToSave)));
-        postToSave.setUser(testUser);
-        postsDao.save(postToSave);
 
         // Throws a Post request to /login and expect a redirection to the Ads index page after being logged in
         httpSession = this.mvc.perform(post("/login").with(csrf())
