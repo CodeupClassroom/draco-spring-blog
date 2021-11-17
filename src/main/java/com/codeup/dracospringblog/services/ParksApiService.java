@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ParksApiService {
 
-    @Value("${parks-api-key}")
+    @Value("${parks_api_key}")
     private String API_KEY;
 
     public String fetchData() {
